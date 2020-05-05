@@ -12,10 +12,19 @@ let timeMin = 0;
 
 function setup() {
   createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+  TIME_DIV_JPN.addEventListener('click', () => this.showJapaneseIime());
+  reset();
+}
+
+function reset() {
   background(255, 0, 0);
   generateTime();
-  showJapaneseIime();
+  blankText();
   drawClock();
+}
+
+function blankText() {
+  TIME_DIV_JPN.innerText = 'Tap to show time in Romaji';
 }
 
 function generateTime() {
@@ -23,7 +32,8 @@ function generateTime() {
   timeMin = Math.floor(random(0, 59));
   let timeMinPretty = timeMin < 10 ? `0${timeMin}` : timeMin;
   console.log(timeMinPretty);
-  TIME_DIV_ENG.innerText = `${timeHr}:${timeMinPretty}`;
+  let timeHrPretty = timeHr == 0 ? 12 : timeHr;
+  TIME_DIV_ENG.innerText = `${timeHrPretty}:${timeMinPretty}`;
 }
 
 function showJapaneseIime() {

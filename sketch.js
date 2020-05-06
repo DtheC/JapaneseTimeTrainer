@@ -37,8 +37,8 @@ function generateTime() {
 }
 
 function showJapaneseIime() {
-  const hr = HOURS_JPN[timeHr];
-  const min = MINS_JPN[timeMin];
+  const hr = HOURS_JPN_HIRAGANA[timeHr];
+  const min = MINS_JPN_HIRAGANA[timeMin];
   TIME_DIV_JPN.innerText = `${hr} ${min}`;
 }
 

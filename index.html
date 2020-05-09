@@ -7,14 +7,23 @@
   <title>Japanese Clock Tester</title>
   <style>
     body {
-      font-size: 50px;
+      font-size: 40px;
       padding: 0;
       margin: 0;
     }
-    time-eng {
-      width: 100%;
+    #clock-holder {
+      position: relative;
     }
-    time-jpn {
+    #time-eng {
+      background-color: white;
+      border-radius: 10px;
+      margin: 0.25em;
+      padding: 0.1em;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+    }
+    #time-jpn-hiragana {
       width: 100%;
     }
   </style>
@@ -23,8 +32,14 @@
 </head>
 
 <body>
-  <div id="time-eng"></div>
-  <div id="time-jpn"></div>
+  <div id="tap-target">
+    <div id="clock-holder">
+      <div id="time-eng"></div>
+    </div>
+    <div id="time-jpn-kanji"></div>
+    <div id="time-jpn-hiragana"></div>
+    <div id="time-jpn-romaji"></div>
+  </div>
   <script src="sketch.js"></script>
 </body>
 

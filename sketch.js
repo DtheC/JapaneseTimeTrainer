@@ -4,16 +4,37 @@ const CLOCKSIZE = CANVAS_WIDTH - 50;
 const CLOCK_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 const MINUTE_HAND_LENGTH = CLOCKSIZE / 2 - 30;
 const HOUR_HAND_LENGTH = CLOCKSIZE / 2 - 50;
+const TIME_DIV_JPN_KANJI = document.getElementById('time-jpn-kanji');
+const TIME_DIV_JPN_ROMAJI = document.getElementById('time-jpn-romaji');
+const TIME_DIV_JPN_HIRAGANA = document.getElementById('time-jpn-hiragana');
 const TIME_DIV_ENG = document.getElementById('time-eng');
-const TIME_DIV_JPN = document.getElementById('time-jpn');
+const TAP_TARGET = document.getElementById('tap-target');
+let CANVAS;
 
 let timeHr = 0;
 let timeMin = 0;
 
+let taps = 0;
+
 function setup() {
-  createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-  TIME_DIV_JPN.addEventListener('click', () => this.showJapaneseIime());
+  CANVAS = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+  CANVAS.parent('clock-holder');
+  TAP_TARGET.addEventListener('click', this.tap);
   reset();
+}
+
+function tap() {
+  console.log('rrrr');
+  taps++;
+  if (taps === 1) {
+    showJapaneseIime();
+  }
+  if (taps === 2) {
+    showRomajiTime();
+  }
+  if (taps > 2) {
+    reset();
+  }
 }
 
 function reset() {
@@ -21,10 +42,13 @@ function reset() {
   generateTime();
   blankText();
   drawClock();
+  taps = 0;
 }
 
 function blankText() {
-  TIME_DIV_JPN.innerText = 'Tap to show time in Romaji';
+  TIME_DIV_JPN_KANJI.innerText = '';
+  TIME_DIV_JPN_HIRAGANA.innerText = '';
+  TIME_DIV_JPN_ROMAJI.innerText = 'Tap to show time';
 }
 
 function generateTime() {
@@ -37,13 +61,23 @@ function generateTime() {
 }
 
 function showJapaneseIime() {
+  const hrKanji = HOURS_JPN_KANJI[timeHr];
+  // const minKanji = MINS_JPN_KANJI[timeMin];
   const hr = HOURS_JPN_HIRAGANA[timeHr];
   const min = MINS_JPN_HIRAGANA[timeMin];
-  TIME_DIV_JPN.innerText = `${hr} ${min}`;
+  // TIME_DIV_JPN_KANJI.innerHTML = `<ruby>${hrKanji}<rt>${hr}</rt> ${min}</ruby>`;
+  TIME_DIV_JPN_HIRAGANA.innerText = `${hr} ${min}`;
+}
+
+function showRomajiTime() {
+  const mins = MINS_JPN[timeMin];
+  const hrs = HOURS_JPN[timeHr];
+  TIME_DIV_JPN_ROMAJI.innerText = `${hrs} ${mins}`;
 }
 
 function drawClock() {
   // Face
+  strokeWeight(1);
   ellipse(width/2, height/2, CLOCKSIZE);
   drawNumbers();
   drawMinuteLines();
